@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: global-tracker-api
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Mahendra
+Implementation-Vendor-Id: com.dugu.acc.dev
+Build-Jdk: 1.8.0_112
+Implementation-URL: http://projects.spring.io/spring-boot/global-track
+ er-api/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

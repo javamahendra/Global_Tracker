@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/contactUs.css}" />
+<title>Contact Us</title>
+</head>
+<body>
+	<div align="center" id="myModal" role="dialog"
+		style="position: absolute; width: 427px; height: 200px; z-index: 15; top: 30%; left: 47%; margin: -100px 0 0 -150px;">
+		<div align="center">
+			<div class="modal-content" style="width: 100%;">
+				<div class="modal-header">
+					<img th:src="@{/images/Mahi.jpg}" alt="teste"
+						class="img-thumbnail" height="50%" width="30%" />
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-success">
+						<table>
+							<tr>
+								<td>Name :</td>
+								<td>Mahendra</td>
+							</tr>
+							<tr>
+								<td>Profession :</td>
+								<td>Developer</td>
+							</tr>
+							<tr>
+								<td>Mobile :</td>
+								<td>8886012569</td>
+							</tr>
+							<tr>
+								<td>Location :</td>
+								<td>Hyderabad,India</td>
+							</tr>
+							<tr>
+								<td>Email :</td>
+								<td>javabymahendra@gmail.com</td>
+							</tr>
+							<tr>
+								<td>Facebook :</td>
+								<td><a th:href="@{https://www.facebook.com}">Profile
+										Link</a></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-primary" onclick="history.go(-1)">Back
+						2 Home</a>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+	<!-- /.modal -->
+
+</body>
+</html>

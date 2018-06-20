@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>SEARCH-PLACCE-API</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/default.css}" />
+<style type="text/css">
+th {
+	text-align: center;
+	font-weight: bold;
+}
+
+/* .row {
+	margin-top: 40px;
+	padding: 0 10px;
+} */
+.row {
+	margin-right: -139px;
+	margin-left: 130px;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.panel-heading div {
+	margin-top: -18px;
+	font-size: 15px;
+}
+
+.panel-heading div span {
+	margin-left: 5px;
+}
+
+.panel-body {
+	display: none;
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Location MAP API</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a th:href="@{/}">Home</a></li>
+				<li><a th:href="@{/global/api/generatePDF}">Download PDF</a></li>
+				<li><a th:href="@{/global/api/generateGraph}">Rating</a></li>
+				<li class="active"><a href="#"><b
+						th:text="'Total Matches Found : '+${matchesCount}"></b></a></li>
+			</ul>
+			<form class="navbar-form navbar-left" action="/global/api/sendEmail">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Email id"
+						name="email" />
+				</div>
+				<button type="submit" class="btn btn-primary">Send Mail</button>
+			</form>
+		</div>
+	</nav>
+	<h2 th:text="${errorMessage}" style="color: red; font-weight: bold;"
+		align="center"></h2>
+	<h1 th:text="${message}" style="color: black; font-weight: bold;"
+		align="center"></h1>
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6" style="width: 70%;">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Search Result</h3>
+						<div class="pull-right">
+							<span class="clickable filter" data-toggle="tooltip"
+								title="Toggle table filter" data-container="body"> <i
+								class="glyphicon glyphicon-filter"></i>
+							</span>
+						</div>
+					</div>
+					<div class="panel-body">
+						<input type="text" class="form-control" id="dev-table-filter"
+							data-action="filter" data-filters="#dev-table"
+							placeholder="Filter Developers" th:value="${searchType}" />
+					</div>
+					<table class="table table-hover" id="dev-table" border="1">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Types</th>
+								<th>Rating</th>
+								<th>Venu Details</th>
+								<th>More Info</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="response : ${searchResponses}">
+								<td th:text="${response.name}">Name</td>
+								<td th:text="${response.types}">Types</td>
+								<td th:text="${response.rating}">Rating</td>
+								<td th:text="${response.location}">Location</td>
+								<td><a th:href="${response.moreInfoLink}"
+									class="btn btn-info">Link</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		(function() {
+			'use strict';
+			var $ = jQuery;
+			$.fn
+					.extend({
+						filterTable : function() {
+							return this
+									.each(function() {
+										$(this)
+												.on(
+														'keyup',
+														function(e) {
+															$(
+																	'.filterTable_no_results')
+																	.remove();
+															var $this = $(this), search = $this
+																	.val()
+																	.toLowerCase(), target = $this
+																	.attr('data-filters'), $target = $(target), $rows = $target
+																	.find('tbody tr');
+
+															if (search == '') {
+																$rows.show();
+															} else {
+																$rows
+																		.each(function() {
+																			var $this = $(this);
+																			$this
+																					.text()
+																					.toLowerCase()
+																					.indexOf(
+																							search) === -1 ? $this
+																					.hide()
+																					: $this
+																							.show();
+																		})
+																if ($target
+																		.find(
+																				'tbody tr:visible')
+																		.size() === 0) {
+																	var col_count = $target
+																			.find(
+																					'tr')
+																			.first()
+																			.find(
+																					'td')
+																			.size();
+																	var no_results = $('<tr class="filterTable_no_results"><td colspan="'+col_count+'">No results found</td></tr>')
+																	$target
+																			.find(
+																					'tbody')
+																			.append(
+																					no_results);
+																}
+															}
+														});
+									});
+						}
+					});
+			$('[data-action="filter"]').filterTable();
+		})(jQuery);
+
+		$(function() {
+			// attach table filter plugin to inputs
+			$('[data-action="filter"]').filterTable();
+
+			$('.container').on('click', '.panel-heading span.filter',
+					function(e) {
+						var $this = $(this), $panel = $this.parents('.panel');
+
+						$panel.find('.panel-body').slideToggle();
+						if ($this.css('display') != 'none') {
+							$panel.find('.panel-body input').focus();
+						}
+					});
+			$('[data-toggle="tooltip"]').tooltip();
+		})
+	</script>
+</body>
+</html>
